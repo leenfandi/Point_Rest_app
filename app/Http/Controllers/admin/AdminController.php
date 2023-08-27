@@ -61,7 +61,7 @@ class AdminController extends Controller
 /////////// reject Restaurant
     public function rejectRestaurant(Request $request)
     {
-       
+
         $validate=Validator::make($request->all(),
         [
            'rustaurant_id'=>'required|exists:rusturants,id',
@@ -78,22 +78,22 @@ class AdminController extends Controller
 /////////// display all Restaurant
 public function displayAllRestaurant(Request $request)
 {
-  
+
     if($request->status||$request->status==0)
     $restaurant = Rusturant::where('status',$request->status)->orderBy('status')->get();
     else
      $restaurant = Rusturant::orderBy('status')->get();
 
     return response(["message" => "fetched successfully", 'data' => $restaurant], 200);
-}       
+}
 
     /////////// display users
     public function displayUsers()
-    { 
+    {
         $role=Role::where('name','user')->first();
         $users=$role->users;
         return response(["message" => "fetched successfully", 'data' => $users], 200);
-    }    
+    }
 
     /////////// display employees
     public function displayEmployees()
@@ -102,7 +102,7 @@ public function displayAllRestaurant(Request $request)
         $users=$role->users;
         return response(["message" => "fetched successfully", 'data' => $users], 200);
 
-    }    
+    }
 
     /////////// display managers
     public function displayManagers()
@@ -110,9 +110,9 @@ public function displayAllRestaurant(Request $request)
         $role=Role::where('name','manager')->first();
         $users=$role->users;
         return response(["message" => "fetched successfully", 'data' => $users], 200);
-    }  
-     
- 
+    }
+
+
      /////////// block User
  public function blockUser(Request $request)
  {
@@ -129,7 +129,7 @@ public function displayAllRestaurant(Request $request)
      }
      BlockedUser::create(['user_id'=>$user->id]);
      return response(["message" => "blocked successfully", 'data' => $user], 200);
- } 
+ }
 
 
  /////////// unblock User
@@ -146,17 +146,17 @@ public function displayAllRestaurant(Request $request)
      $block= BlockedUser::where('user_id',$request->user_id)->first();
      $block->delete();
      return response(["message" => "unblocked successfully", 'data' => $user], 200);
- } 
- 
- 
+ }
+
+
   /////////// display blocked Users
   public function displayblockedUsers()
   {
       $block= BlockedUser::get();
       return response(["message" => "fetched successfully", 'data' => $block], 200);
-  }  
+  }
 
-    /////////// set Pay Restaurant 
+    /////////// set Pay Restaurant
     public function setPayRestaurant(Request $request)
     {
         $validate=Validator::make($request->all(),
@@ -175,5 +175,6 @@ public function displayAllRestaurant(Request $request)
         $pay->end=now()->addMonth();
         $pay->save();
         return response(["message" => "updated successfully", 'data' => $pay], 200);
-    }  
+    }
+    /////
 }
